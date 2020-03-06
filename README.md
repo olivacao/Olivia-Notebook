@@ -1,6 +1,6 @@
 ## Olivia Notebook 
 
-### Leetcode NoteBook
+### Leetcode Notes
 
 1. BFS/DFS 
 
