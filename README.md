@@ -2,7 +2,7 @@
 
 ### Leetcode Notes
 
-1. BFS/DFS 
+1. [BFS/DFS](https://github.com/olivacao/Olivia-Notebook/blob/master/Leetcode/BFS%26DFS.md) 
 
 You can use the [editor on GitHub](https://github.com/olivacao/oliviacao.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
