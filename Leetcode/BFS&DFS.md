@@ -78,7 +78,67 @@ Output:
 ```
 **Solution:**
 ```java
-
+public class Solution {
+    /**
+     * @param rooms: m x n 2D grid
+     * @return: nothing
+     */
+    public void wallsAndGates(int[][] rooms) {
+        // write your code here
+        if (rooms == null || rooms.length == 0 || rooms[0].length == 0) {
+            return;
+        }
+        int row = rooms.length;
+        int col = rooms[0].length;
+        
+        
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (rooms[i][j] == 0) {
+                    BFS(rooms,i,j);
+                }
+            }
+        }
+    }
+    private void BFS(int[][] rooms, int i, int j) {
+        int row  = rooms.length;
+        int col = rooms[0].length;
+        Queue<Cell> queue= new ArrayDeque<>();
+        queue.offer(new Cell(i,j));
+        int[] directionX = {-1,1,0,0};
+        int[] directionY = {0,0,-1,1};
+      
+        while (!queue.isEmpty()) {
+            Cell cur = queue.poll();
+            for (int m = 0; m < 4; m++) {
+                int nextX = directionX[m] + cur.x;
+                int nextY = directionY[m] + cur.y;
+                if (inBound(rooms, nextX, nextY)) {
+                    if (rooms[nextX][nextY] > 0 && rooms[nextX][nextY] > rooms[cur.x][cur.y] + 1) {
+                        rooms[nextX][nextY] = rooms[cur.x][cur.y] + 1;
+                        queue.offer(new Cell(nextX,nextY));
+                    }
+                }
+            }
+           
+            
+        }
+    }
+    private boolean inBound(int[][] rooms, int i, int j) {
+        int row = rooms.length;
+        int col = rooms[0].length;
+        
+        return (i >= 0 && j >= 0 && i < row && j < col);
+    }
+}
+class Cell {
+    int x;
+    int y;
+    public Cell(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
 ```
 
 
