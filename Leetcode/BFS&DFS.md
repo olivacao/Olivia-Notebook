@@ -63,11 +63,11 @@ class Cell {
 **Problem:**  
 
 You are given a m x n 2D grid initialized with these three possible values.  
--1 - A wall or an obstacle.  
-0 - A gate.  
-INF - Infinity means an empty room.  
-We use the value 2^31 - 1 = 2147483647 to represent INF as you may assume that the distance to a gate is less than 2147483647.
-Fill each empty room with the distance to its nearest gate. If it is impossible to reach a Gate, that room should remain filled with INF  
+`-1`: A wall or an obstacle.  
+`0`: A gate.  
+`INF`: Infinity means an empty room.  
+We use the value `2^31 - 1 = 2147483647` to represent INF as you may assume that the distance to a gate is less than 2147483647.  
+Fill each empty room with the distance to its nearest gate. If it is impossible to reach a Gate, that room should remain filled with `INF`  
 
 **Example:**
 ```
@@ -76,7 +76,8 @@ Input:
 Output:
 [[0,-1],[1,2]]
 ```
-**Solution:**
+**First Solution:**
+
 ```java
 public class Solution {
     /**
@@ -141,4 +142,63 @@ class Cell {
 }
 ```
 
+**Second Solution**
+Step1: push all doors into queue  
+Step2: BFS all doors and update each `INF`. 
+```java
+public class Solution {
+    /**
+     * @param rooms: m x n 2D grid
+     * @return: nothing
+     */
+    public void wallsAndGates(int[][] rooms) {
+        // write your code here
+        if (rooms == null || rooms.length == 0 || rooms[0].length == 0) {
+            return;
+        }
+        int row = rooms.length;
+        int col = rooms[0].length;
+        Queue<Cell> queue = new ArrayDeque<>();
+        int[] dx = {0,0,1,-1};
+        int[] dy = {1,-1,0,0};
+        //push all door into queue
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (rooms[i][j] == 0) {
+                    queue.offer(new Cell(i,j));
+                }
+            }
+        }
+        //BFS each door
+        while (!queue.isEmpty()) {
+            Cell cur = queue.poll();
+            for (int i = 0; i < 4; i++) {
+                int nextX = cur.x + dx[i];
+                int nextY = cur.y + dy[i];
+                if (inBound(rooms,nextX,nextY) && rooms[nextX][nextY] == Integer.MAX_VALUE) {
+                    queue.offer(new Cell(nextX,nextY));
+                    rooms[nextX][nextY] = rooms[cur.x][cur.y] + 1;
+                }
+            }
+            
+        }
+        
+    }
+  
+    private boolean inBound(int[][] rooms, int i, int j) {
+        int row = rooms.length;
+        int col = rooms[0].length;
+        
+        return (i >= 0 && j >= 0 && i < row && j < col);
+    }
+}
+class Cell {
+    int x;
+    int y;
+    public Cell(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
 
+```
