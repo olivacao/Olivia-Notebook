@@ -72,9 +72,21 @@ Fill each empty room with the distance to its nearest gate. If it is impossible 
 **Example:**
 ```
 Input:
-[[0,-1],[2147483647,2147483647]]
+[[2147483647,-1,0,2147483647],[2147483647,2147483647,2147483647,-1],[2147483647,-1,2147483647,-1],[0,-1,2147483647,2147483647]]
 Output:
-[[0,-1],[1,2]]
+[[3,-1,0,1],[2,2,1,-1],[1,-1,2,-1],[0,-1,3,4]]
+
+Explanation:
+the 2D grid is:
+INF  -1  0  INF
+INF INF INF  -1
+INF  -1 INF  -1
+  0  -1 INF INF
+the answer is:
+  3  -1   0   1
+  2   2   1  -1
+  1  -1   2  -1
+  0  -1   3   4
 ```
 **First Solution:**
 
