@@ -282,3 +282,61 @@ class Cell {
 }
 //Time = O(mn)
 ```
+
+### 4.[Nested List Weight Sum](https://www.lintcode.com/problem/nested-list-weight-sum/description)
+**Solution1:**(Recursion)
+```java
+public class Solution {
+    public int depthSum(List<NestedInteger> nestedList) {
+        // Write your code here
+        return DFS(nestedList,1);
+    }
+    private int DFS(List<NestedInteger> nestedList, int depth) {
+        if (nestedList == null || nestedList.size() == 0) {
+            return 0;
+        }
+        int sum = 0;
+        for(NestedInteger ele : nestedList) {
+            if (ele.isInteger()) {
+                sum += ele.getInteger() * depth;
+            } else {
+                sum += DFS(ele.getList(),depth+1);
+            }
+        }
+        return sum;
+    }
+   
+}
+```
+**Solution2:**(iterative)
+```java
+public class Solution {
+    public int depthSum(List<NestedInteger> nestedList) {
+        // Write your code here
+        int sum = 0;
+        int depth = 1;
+        Queue<List<NestedInteger>> queue = new ArrayDeque<>();
+        if (nestedList == null || nestedList.size() == 0) {
+            return 0;
+        }
+        queue.offer(nestedList);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                List<NestedInteger> cur = queue.poll();
+                for (NestedInteger ele: cur) {
+                    if (ele.isInteger()) {
+                        sum += ele.getInteger()*depth;
+                    } else {
+                        queue.offer(ele.getList());
+                    }
+                }
+            }
+            depth++;
+        }
+        
+        return sum;
+    }
+}
+
+```
