@@ -340,3 +340,44 @@ public class Solution {
 }
 
 ```
+
+### 5.[Nested List Weight Sum II](https://www.lintcode.com/problem/nested-list-weight-sum-ii/description)
+**Solution:**
+```java
+public class Solution {
+    /**
+     * @param nestedList: a list of NestedInteger
+     * @return: the sum
+     */
+    public int depthSumInverse(List<NestedInteger> nestedList) {
+        // Write your code here.
+        if (nestedList == null || nestedList.size() == 0) {
+            return 0;
+        }
+        Queue<List<NestedInteger>> queue = new ArrayDeque<>();
+        queue.offer(nestedList);
+        int preSum = 0;
+        int ans = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            int levelSum = 0;
+            for (int i = 0; i < size; i++) {
+                List<NestedInteger> cur = queue.poll();
+                for (NestedInteger ele : cur) {
+                    if (ele.isInteger()) {
+                        levelSum += ele.getInteger();
+                    } else {
+                        queue.offer(ele.getList());
+                    }
+                }
+            }
+         
+            preSum += levelSum;
+            ans += preSum;
+        }
+        return ans;   
+    }
+   
+}
+
+```
