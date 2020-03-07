@@ -142,7 +142,7 @@ class Cell {
 }
 ```
 
-**Second Solution**
+**Second Solution:**  
 Step1: push all doors into queue  
 Step2: BFS all doors and update each `INF`. 
 ```java
