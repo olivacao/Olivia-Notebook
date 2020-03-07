@@ -57,6 +57,7 @@ class Cell {
         this.y = y;
     }
 }
+//Time = O(mn)
 ```
 
 ### 2. Walls and Gates 286
@@ -213,4 +214,71 @@ class Cell {
     }
 }
 
+```
+### 3.[Surrounded Regions](https://leetcode.com/problems/surrounded-regions/description/) 130
+**Solution:**
+```java
+class Solution {
+    public void solve(char[][] board) {
+        if (board == null || board.length == 0 || board[0].length == 0) {
+            return;
+        }
+        int row = board.length;
+        int col = board[0].length;
+        int[][] direct = {{0,1},{0,-1},{-1,0},{1,0}};
+        Queue<Cell> queue = new ArrayDeque<>();
+        //traverse all cells on board and push them to queue        
+        //top and bottom board
+        for (int i = 0; i < col; i++) {
+            if (board[0][i] == 'O') {
+                queue.offer(new Cell(0,i));
+            }
+            if (board[row - 1][i] == 'O') {
+                queue.offer(new Cell(row-1,i));
+            } 
+        }
+        //left and right
+        for (int i = 1; i < row-1; i++) {
+            if (board[i][0] == 'O') {
+                queue.offer(new Cell(i,0));
+            }
+            if (board[i][col-1] == 'O') {
+                queue.offer(new Cell(i,col-1));
+            }
+        }
+        
+        //poll the queue, mark all O connected to the board O to B
+        while(!queue.isEmpty()) {
+            Cell cur = queue.poll();
+            board[cur.x][cur.y] = 'B';
+            for (int i = 0; i < 4; i++) {
+                int nx = cur.x + direct[i][0];
+                int ny = cur.y + direct[i][1];
+                if (nx >= 0 && ny >= 0 && nx < row && ny < col && board[nx][ny] == 'O') {
+                    queue.offer(new Cell(nx,ny));
+                }
+            }
+        }
+        //change all B to O, the rest O to X
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (board[i][j] == 'B') {
+                    board[i][j] = 'O';
+                } else if (board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+        
+    }
+}
+class Cell {
+    int x;
+    int y;
+    public Cell(int x,int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+//Time = O(mn)
 ```
