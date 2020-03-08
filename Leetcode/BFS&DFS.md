@@ -381,3 +381,47 @@ public class Solution {
 }
 
 ```
+
+### 6.[Time Needed to Inform All Employees](https://leetcode.com/problems/time-needed-to-inform-all-employees)
+**My Solution(DFS):**
+```java
+class Solution {
+    public int numOfMinutes(int n, int headID, int[] manager, int[] informTime) {
+        int mins = 0;
+        Map<Integer,List<Integer>> map = new HashMap<>();
+        map.put(headID,new ArrayList<Integer>());
+        for (int i = 0; i < n; i++) {
+        	List<Integer> cur = map.get(manager[i]);
+            if (cur != null && manager[i]!= -1) {
+               cur.add(i);              
+            }
+            if (cur == null) {
+            	List<Integer> tmp = new ArrayList<>();
+            	tmp.add(i);
+            	map.put(manager[i], tmp);
+            }           
+        }
+     
+        return DFS(map, headID, informTime);
+    }
+    public int DFS(Map<Integer,List<Integer>> map,Integer key,int[] informTime) {
+    	List<Integer> cur = map.get(key);
+    	int maxTime = 0;
+    	if (cur == null) {
+    		return informTime[key];
+    	}
+    	for (Integer ele: cur) {
+    		maxTime = Math.max(maxTime,DFS(map, ele, informTime));
+    	}
+    	return maxTime + informTime[key];
+    }   
+}
+```
+
+**Solution(BFS)**
+
+```java
+
+
+//Time = O(n)
+```
